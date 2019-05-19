@@ -20,19 +20,39 @@ router.get("/api/friends", function(req, res) {
 // This route will also be used to handle the compatibility logic.
 router.post("/api/friends", function(req, res) {
     console.log('POST /api/friends ')
-    // req.body hosts is equal to the JSON post sent from the user
-    // This works because of our body parsing middleware
-    var newcharacter = req.body;
 
-    // Using a RegEx Pattern to remove spaces from newCharacter
-    // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-    newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
+    // 6. Determine the user's most compatible friend using the following as a guide:
 
-    console.log(newcharacter);
+    //    * Convert each user's results into a simple array of numbers (ex: `[5, 1, 4, 4, 5, 1, 2, 5, 4, 1]`).
+    //    * With that done, compare the difference between current user's scores against those from other users, question by question. Add up the differences to calculate the `totalDifference`.
+    //      * Example:
+    //        * User 1: `[5, 1, 4, 4, 5, 1, 2, 5, 4, 1]`
+    //        * User 2: `[3, 2, 6, 4, 5, 1, 2, 5, 4, 1]`
+    //        * Total Difference: **2 + 1 + 2 =** **_5_**
+    //    * Remember to use the absolute value of the differences. Put another way: no negative solutions! Your app should calculate both `5-3` and `3-5` as `2`, and so on.
+    //    * The closest match will be the user with the least amount of difference.
 
-    characters.push(newcharacter);
+    friendsList = friends.getAllFriends();
+    var bestMatch = {
+        totalDifference: 50,
+        id: 0
+    };
 
-    res.json(newcharacter);
+    for(let i = 0; i < friendsList.length; i++) {
+        let totalDifference = 0;
+        for(let j = 0; j < req.body.score.length; j++) {
+            totalDifference += Math.abs(req.body.score[j] - friendsList[i].score[j]);
+        }
+
+        if(bestMatch.totalDifference < totalDifference) {
+            bestMatch.totalDifference = totalDifference;
+            bestMatch.id = i;
+        }
+    }
+
+    friends.addFriend(req.body);
+
+    res.json(friendsList[bestMatch.id]);
 });
 
 module.exports = router;
