@@ -13,15 +13,13 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-  <!-- <style>
-    .question {
-      width: 600px
-    }
-  </style> -->
+  <style>
+  #matchPic {
+    width: 450px;
+  }
+  </style>
 </head>
 
-<!-- 7. Once you've found the current user's most compatible friend, display the result as a modal pop-up.
-      * The modal should display both the name and picture of the closest match. -->
 <body>
 
   <div class="container">
@@ -29,7 +27,6 @@
       <h2>Survey Questions</h2>
       <hr>
       <h3><strong>About You</strong></h3>
-      <hr>
       <form>
           <div class="form-group">
             <label for="nameInput">Name (Required)</label>
@@ -163,12 +160,14 @@
                 <option value="5">(Strongly Agree) Five</option>
               </select>
           </div>
-          <hr>
-          <div class="col-md12"> 
-            <button class="btn btn-primary btn-lg" id="submit-btn"><span class="fa fa-check"></span> Submit</button>
-          </div>
         </div>
       </form>
+      <hr>
+      <div class="row">
+        <div class="col-md12"> 
+          <button class="btn btn-primary btn-lg" id="submit-btn"><span class="fa fa-check"></span> Submit</button>
+        </div>
+      </div>
       <!-- The Modal -->
       <div class="modal fade" id="myModal">
         <div class="modal-dialog">
@@ -181,7 +180,14 @@
             </div>
             
             <!-- Modal body -->
-            <div class="modal-body" id="modalText">Blah</div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-auto">
+                    <h2 id="modalText">Blah</h2>
+                    <img src="" id="matchPic"></src>  
+                </div>     
+              </div>
+            </div>
             
             <!-- Modal footer -->
             <div class="modal-footer">
@@ -210,6 +216,7 @@
       if(providedName.length === 0) {
         $("#modalTitle").text("User Input Needed");
         $("#modalText").text("Enter your name.");
+        $("#matchPic").attr("src", "");
         $("#myModal").modal();
         return;
       }
@@ -219,6 +226,7 @@
       if(providedPhotoImg.length === 0) {
         $("#modalTitle").text("User Input Needed");
         $("#modalText").text("Enter a photo.");
+        $("#matchPic").attr("src", "");
         $("#myModal").modal();
         return;
       }
@@ -231,6 +239,7 @@
         if(questionVal === "Select an Option") {
           $("#modalTitle").text("User Input Needed");
           $("#modalText").text(`Please choose an answer for question ${i}.`);
+          $("#matchPic").attr("src", "");
           $("#myModal").modal();
           return;
         }
@@ -238,18 +247,19 @@
         newFriend.score.push(parseInt(questionVal));
       }
 
-      console.log("newFriend: ");
-      console.log(newFriend);
-
-      // Question: What does this code do??
       $.post("/api/friends", newFriend)
         .then(function(data) {
-          console.log("/api/friends", data);
+          // 7. Once you've found the current user's most compatible friend, display 
+          // the result as a modal pop-up.
+          // The modal should display both the name and picture of the closest match.
           $("#modalTitle").text("Best Match:");
           $("#modalText").text(`${data.name}`);
+          $("#matchPic").attr("src", `${data.photo}`);
           $("#myModal").modal();
         });
+
     });
+
   </script>
 </body>
 

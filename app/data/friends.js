@@ -23,7 +23,7 @@
 var friends = [
     {
       name: "Yoda",
-      photo: "",
+      photo: "https://lumiere-a.akamaihd.net/v1/images/Yoda-Retina_2a7ecc26.jpeg?region=0%2C0%2C1536%2C864&width=960",
       score: [
         5,
         1,
@@ -39,29 +39,29 @@ var friends = [
     },
     {
       name: "Darth Maul",
-      photo: "",
+      photo: "https://vignette.wikia.nocookie.net/starwars/images/5/50/Darth_Maul_profile.png/revision/latest?cb=20140209162228",
       score: [
-        5,
-        1,
-        4,
-        4,
-        5,
         1,
         2,
         5,
         4,
-        1
-      ]
-    },
-    {
-      name: "Obi Wan Kenobi",
-      photo: "",
-      score: [
+        1,
         5,
         1,
         4,
         4,
         5,
+      ]
+    },
+    {
+      name: "Obi Wan Kenobi",
+      photo: "https://upload.wikimedia.org/wikipedia/en/3/32/Ben_Kenobi.png",
+      score: [
+        1,
+        4,
+        4,
+        5,
+        5,       
         1,
         2,
         5,
