@@ -1,0 +1,49 @@
+<!-- 1. Your survey should have 10 questions of your choosing. Each answer -->
+<!-- should be on a scale of 1 to 5 based on how much the user agrees or   -->
+<!-- disagrees with a question. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>FriendFinder survey!</title>
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="jumbotron">
+        <h1>
+            <i class="fab fa-facebook-square" aria-hidden="true">
+            </i>
+             Friend Finder
+        </h1>
+        <h2>Answer a few basic questions.</h2>
+        <h2>Then find the friend with the greatest compatibility!</h2>
+        <a href="/survey"><button class="btn btn-primary btn-lg" id="survery-btn"><span class="fa fa-list"></span> Go to survey</button></a>
+    </div>
+    <div>
+        <p>
+            <a href="/api/friends">API Friends List</a>
+            | 
+            <a href="/api/friends">GitHub Repo</a>
+        </p>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $("#survery-btn").on("click", function() {
+      $.get("/survey", function(data) {
+        console.log(data);
+        });
+    });
+  </script>
+</body>
+
+</html>
